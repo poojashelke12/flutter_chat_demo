@@ -6,19 +6,40 @@ class HomeProvider {
 
   HomeProvider({required this.firebaseFirestore});
 
-  Future<void> updateDataFirestore(String collectionPath, String path, Map<String, String> dataNeedUpdate) {
-    return firebaseFirestore.collection(collectionPath).doc(path).update(dataNeedUpdate);
+  Future<void> updateDataFirestore(
+      String collectionPath, String path, Map<String, String> dataNeedUpdate) {
+    return firebaseFirestore
+        .collection(collectionPath)
+        .doc(path)
+        .update(dataNeedUpdate);
   }
 
-  Stream<QuerySnapshot> getStreamFireStore(String pathCollection, int limit, String? textSearch) {
+  // Stream<QuerySnapshot> getStreamFireStore(
+  //     String pathCollection, int limit, String? textSearch) {
+  //   if (textSearch?.isNotEmpty == true) {
+  //     return firebaseFirestore.collection(pathCollection).limit(limit).where(
+  //         FirestoreConstants.nickname,
+  //         arrayContains: [textSearch]).snapshots();
+  //   } else {
+  //     return firebaseFirestore
+  //         .collection(pathCollection)
+  //         .limit(limit)
+  //         .snapshots();
+  //   }
+  // }
+  Stream<QuerySnapshot> getStreamFireStore(
+      String pathCollection, int limit, String? textSearch) {
     if (textSearch?.isNotEmpty == true) {
       return firebaseFirestore
           .collection(pathCollection)
           .limit(limit)
-          .where(FirestoreConstants.nickname, isEqualTo: textSearch)
-          .snapshots();
+          .orderBy(FirestoreConstants.nickname)
+          .startAt([textSearch]).endAt([textSearch! + '\uf8ff']).snapshots();
     } else {
-      return firebaseFirestore.collection(pathCollection).limit(limit).snapshots();
+      return firebaseFirestore
+          .collection(pathCollection)
+          .limit(limit)
+          .snapshots();
     }
   }
 }
