@@ -2,7 +2,8 @@ import 'dart:ui';
 
 class ColorConstants {
   // static const themeColor = Color(0xfff5a623);
-  static const themeColor = Color.fromARGB(255, 48, 127, 245);
+  // static const themeColor = Color.fromRGBO(48, 127, 245, 1);
+  static const themeColor = Color.fromARGB(255, 54, 194, 136);
   static Map<int, Color> swatchColor = {
     50: themeColor.withOpacity(0.1),
     100: themeColor.withOpacity(0.2),
